@@ -10,12 +10,13 @@ mapboxgl.accessToken = ACCESS_TOKEN;
 
 const Map = () => {
   const context = useContext(SFContext);
+  console.warn(context.solarFieldData);
 
   const mapContainer = useRef();
 
   let [lng, setLng] = useState(-115.60639190059982);
   let [lat, setLat] = useState(32.67369394339296);
-  const [zoom, setZoom] = useState(9);
+  const [zoom, setZoom] = useState(12);
 
   if (context.solarFieldData.features !== undefined) {
     lng = context.solarFieldData.features[0].geometry.coordinates[0];
@@ -30,9 +31,27 @@ const Map = () => {
       zoom: zoom,
     });
 
-    var marker = new mapboxgl.Marker().setLngLat([-70.9, 42.35]).addTo(map);
+    let markers = [];
+
+    if (context.solarFieldData.features !== undefined) {
+      for (let i = 0; i < context.solarFieldData.features.length; i++) {
+        markers.push([
+          context.solarFieldData.features[i].geometry.coordinates[0],
+          context.solarFieldData.features[i].geometry.coordinates[1],
+        ]);
+      }
+    }
+
+    if (markers.length) {
+      markers.forEach((technician) => {
+        let marker = new mapboxgl.Marker()
+          .setLngLat([technician[0], technician[1]])
+          .addTo(map);
+      });
+    }
+
     return () => map.remove();
-  }, [context.solarFieldData]);
+  }, [context.counter]);
 
   return (
     <div>

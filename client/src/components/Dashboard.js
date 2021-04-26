@@ -15,8 +15,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import PublicIcon from '@material-ui/icons/Public';
+import WarningIcon from '@material-ui/icons/Warning';
 import Map from './Map.js';
 // import SolarFieldsList from './SolarFieldsList.js';
 import SFContext from '../context.js';
@@ -95,7 +95,7 @@ export default function Dashboard() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [solarFieldData, setSolarFieldData] = useState({});
-  let counter = 0;
+  const [counter, setCounter] = useState(0);
 
   const changeSolarFieldData = (data) => {
     setSolarFieldData(data);
@@ -115,19 +115,23 @@ export default function Dashboard() {
         `http://localhost:3000/api/v1/solar_farms/${solarFieldsID}/technicians`
       )
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         changeSolarFieldData(data.data);
       });
   };
 
   setInterval(() => {
-    if (counter === 15) counter = 0;
+    if (counter === 16) {
+      setCounter(0);
+    }
     fetchSolarField(counter);
+    setCounter(counter + 1);
   }, 3000);
 
   return (
     <SFContext.Provider
       value={{
+        counter,
         solarFieldData,
         changeSolarFieldData,
       }}
@@ -183,13 +187,13 @@ export default function Dashboard() {
           <List>
             <ListItem button key={'Map'}>
               <ListItemIcon>
-                <InboxIcon />
+                <PublicIcon />
               </ListItemIcon>
               <ListItemText primary={'Map'} />
             </ListItem>
             <ListItem button key={'Alerts'}>
               <ListItemIcon>
-                <InboxIcon />
+                <WarningIcon />
               </ListItemIcon>
               <ListItemText primary={'Alerts'} />
             </ListItem>
