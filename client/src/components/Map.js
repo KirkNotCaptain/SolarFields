@@ -10,7 +10,6 @@ mapboxgl.accessToken = ACCESS_TOKEN;
 
 const Map = () => {
   const context = useContext(SFContext);
-  console.warn(context.solarFieldData);
 
   const mapContainer = useRef();
 

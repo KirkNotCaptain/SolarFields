@@ -115,7 +115,6 @@ export default function Dashboard() {
         `http://localhost:3000/api/v1/solar_farms/${solarFieldsID}/technicians`
       )
       .then((data) => {
-        // console.log(data.data);
         changeSolarFieldData(data.data);
       });
   };
@@ -126,7 +125,7 @@ export default function Dashboard() {
     }
     fetchSolarField(counter);
     setCounter(counter + 1);
-  }, 3000);
+  }, 10000);
 
   return (
     <SFContext.Provider
