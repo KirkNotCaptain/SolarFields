@@ -18,8 +18,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Map from './Map.js';
-import SolarFieldsList from './SolarFieldsList.js';
+// import SolarFieldsList from './SolarFieldsList.js';
 import SFContext from '../context.js';
+import axios from 'axios';
 
 const drawerWidth = 300;
 
@@ -93,12 +94,8 @@ export default function Dashboard() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [solarFieldID, setSolarFieldID] = useState(0);
   const [solarFieldData, setSolarFieldData] = useState({});
-
-  const changeSolarField = (solarFieldsID) => {
-    setSolarFieldID(solarFieldsID);
-  };
+  let counter = 0;
 
   const changeSolarFieldData = (data) => {
     setSolarFieldData(data);
@@ -112,11 +109,25 @@ export default function Dashboard() {
     setOpen(false);
   };
 
+  const fetchSolarField = (solarFieldsID) => {
+    axios
+      .get(
+        `http://localhost:3000/api/v1/solar_farms/${solarFieldsID}/technicians`
+      )
+      .then((data) => {
+        console.log(data.data);
+        changeSolarFieldData(data.data);
+      });
+  };
+
+  setInterval(() => {
+    if (counter === 15) counter = 0;
+    fetchSolarField(counter);
+  }, 3000);
+
   return (
     <SFContext.Provider
       value={{
-        solarFieldID,
-        changeSolarField,
         solarFieldData,
         changeSolarFieldData,
       }}
@@ -169,17 +180,19 @@ export default function Dashboard() {
             </IconButton>
           </div>
           <Divider />
-          <SolarFieldsList />
-          <Divider />
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            <ListItem button key={'Map'}>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Map'} />
+            </ListItem>
+            <ListItem button key={'Alerts'}>
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={'Alerts'} />
+            </ListItem>
           </List>
         </Drawer>
         <main className={classes.content}>

@@ -13,8 +13,8 @@ const Map = () => {
 
   const mapContainer = useRef();
 
-  let [lng, setLng] = useState(-70.9);
-  let [lat, setLat] = useState(42.35);
+  let [lng, setLng] = useState(-115.60639190059982);
+  let [lat, setLat] = useState(32.67369394339296);
   const [zoom, setZoom] = useState(9);
 
   if (context.solarFieldData.features !== undefined) {
@@ -29,6 +29,8 @@ const Map = () => {
       center: [lng, lat],
       zoom: zoom,
     });
+
+    var marker = new mapboxgl.Marker().setLngLat([-70.9, 42.35]).addTo(map);
     return () => map.remove();
   }, [context.solarFieldData]);
 

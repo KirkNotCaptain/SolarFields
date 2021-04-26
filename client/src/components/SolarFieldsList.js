@@ -37,10 +37,7 @@ const SolarFieldsList = () => {
         `http://localhost:3000/api/v1/solar_farms/${solarFieldsID}/technicians`
       )
       .then((data) => {
-        console.log(
-          'data recieved:',
-          data.data.features[0].geometry.coordinates[0]
-        );
+        console.log('data recieved:', data.data);
         context.changeSolarField(solarFieldsID);
         context.changeSolarFieldData(data.data);
       });
