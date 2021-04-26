@@ -118,7 +118,7 @@ export default function Dashboard() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Mini variant drawer
+            Solar Fields Technicians
           </Typography>
         </Toolbar>
       </AppBar>
@@ -169,7 +169,7 @@ export default function Dashboard() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        MAP HERE
+        <Map />
       </main>
     </div>
   );

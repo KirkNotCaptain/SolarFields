@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import mapboxgl from 'mapbox-gl/dist/mapbox-gl-csp';
 import MapboxWorker from 'worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker';
 const ACCESS_TOKEN = process.env.ACCESS_TOKEN;
+import css from '../../public/styles.css';
 
 mapboxgl.workerClass = MapboxWorker;
 mapboxgl.accessToken = ACCESS_TOKEN;
