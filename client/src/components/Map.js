@@ -12,17 +12,15 @@ const Map = () => {
   const context = useContext(SFContext);
 
   const mapContainer = useRef();
-  // if (context.solarFieldData) {
-  //   const lng = context.solarFieldData.features[0].geometry.coordinates[0];
-  //   const lat = context.solarFieldData.features[0].geometry.coordinates[1];
-  // } else {
-  //   const [lng, setLng] = useState(-70.9);
-  //   const [lat, setLat] = useState(42.35);
-  // }
 
-  const [lng, setLng] = useState(-70.9);
-  const [lat, setLat] = useState(42.35);
+  let [lng, setLng] = useState(-70.9);
+  let [lat, setLat] = useState(42.35);
   const [zoom, setZoom] = useState(9);
+
+  if (context.solarFieldData.features !== undefined) {
+    lng = context.solarFieldData.features[0].geometry.coordinates[0];
+    lat = context.solarFieldData.features[0].geometry.coordinates[1];
+  }
 
   useEffect(() => {
     const map = new mapboxgl.Map({
@@ -32,7 +30,7 @@ const Map = () => {
       zoom: zoom,
     });
     return () => map.remove();
-  }, []);
+  }, [context.solarFieldData]);
 
   return (
     <div>
