@@ -1,8 +1,5 @@
 import React from 'react';
 import reactDOM from 'react-dom';
+import Dashboard from './components/Dashboard.js';
 
-const App = () => {
-  return <h1>Hello World</h1>;
-};
-
-reactDOM.render(<App />, document.getElementById('root'));
+reactDOM.render(<Dashboard />, document.getElementById('root'));
